@@ -21,7 +21,7 @@ function getRandomArbitrary(min, max) {
 
 const generateBombBoard = (numberOfRows, numberOfColumns, numberOfBombs) => { 
        let board = [];
-        console.log(numberOfRows, numberOfColumns)
+        //console.log(numberOfRows, numberOfColumns)
         for (let numberOfRowsIndex=0;numberOfRowsIndex<numberOfRows;numberOfRowsIndex++){
             let row = [];
             for (let numberOfColumnsIndex=0;numberOfColumnsIndex<numberOfColumns;numberOfColumnsIndex++){
@@ -30,25 +30,29 @@ const generateBombBoard = (numberOfRows, numberOfColumns, numberOfBombs) => {
             board.push(row)
         }//for
 
-
         let numberOfBombsPlaced = 0;
-        let randomRowIndex = Math.floor(Math.random()*numberOfRows);
-        let randomColumnIndex = Math.floor(Math.random()*numberOfColumns);
-        board[randomRowIndex][randomColumnIndex] = "B";
-        console.log("-----------row y column---------");
-        console.log(randomRowIndex);
-        console.log("column ---");
-        console.log(randomColumnIndex);
-        console.log("--------------------");
-    /*
         while(numberOfBombsPlaced<numberOfBombs){
-    
-        }*/
-
-
-
-
+          //  console.log(numberOfBombsPlaced+" de un numero de bombas "+numberOfBombs);
+            let randomRowIndex = Math.floor(Math.random()*numberOfRows);
+            let randomColumnIndex = Math.floor(Math.random()*numberOfColumns);
+            //en este momento no verifica si ya habia una bomba en ese lugar    
+            board[randomRowIndex][randomColumnIndex] = "B";
+            numberOfBombsPlaced++;
+        }//while
         return board
     }//function
 
-console.log(generateBombBoard(4,4,4));
+
+const printBoard = (board) =>{
+    console.log(board.map(row => row.join(' | ')).join('\n'));
+}//printboard
+
+
+let playerBoard = generatePlayerBoard(3,4);
+let bombBoard = generateBombBoard(3,4,5);
+
+console.log("Player Board: ");
+printBoard(playerBoard);
+console.log("Bomb Board: ");
+printBoard(bombBoard);
+
