@@ -31,14 +31,19 @@ const generateBombBoard = (numberOfRows, numberOfColumns, numberOfBombs) => {
         }//for
 
         let numberOfBombsPlaced = 0;
-        while(numberOfBombsPlaced<numberOfBombs){
+        while(numberOfBombsPlaced < numberOfBombs){
           //  console.log(numberOfBombsPlaced+" de un numero de bombas "+numberOfBombs);
+
             let randomRowIndex = Math.floor(Math.random()*numberOfRows);
             let randomColumnIndex = Math.floor(Math.random()*numberOfColumns);
-            //en este momento no verifica si ya habia una bomba en ese lugar    
-            board[randomRowIndex][randomColumnIndex] = "B";
-            numberOfBombsPlaced++;
+        
+            if (board[randomRowIndex][randomColumnIndex] !== "B"){
+                board[randomRowIndex][randomColumnIndex] = "B";
+                numberOfBombsPlaced++;
+            }//if
         }//while
+
+
         return board
     }//function
 
