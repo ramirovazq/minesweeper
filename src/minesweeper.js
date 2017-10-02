@@ -45,12 +45,53 @@ const generateBombBoard = (numberOfRows, numberOfColumns, numberOfBombs) => {
 
 
         return board
-    }//function
+    };//function
 
+
+const getNumberOfNeighborBombs = (bombBoard, rowIndex, columnIndex) =>{
+    const neighborOffsets = [[-1,-1],[-1,0],[-1,1],[0,1],[1,1],[1,0],[1,-1],[0,-1]];
+    const numberOfRows = bombBoard.length;
+    const numberOfColumns = bombBoard[0].length;
+    let numberOfBombs = 0;
+
+    neighborOffsets.forEach((offset)=>{
+        /*
+        console.log("entrando al offset del foreach");
+        console.log("------------------- inicio");
+        console.log(numberOfRows);
+        console.log(numberOfColumns);
+        console.log("------------------- fin");
+*/
+        const neighborRowIndex = rowIndex + offset[0];
+        const neighborColumnIndex = columnIndex + offset[1];
+
+            if (  ((neighborRowIndex >=0) && (neighborRowIndex < numberOfRows)) && ((neighborColumnIndex >=0) && (neighborColumnIndex < numberOfColumns))  ) {
+                if(bombBoard[neighborRowIndex][neighborColumnIndex] === "B"){
+                    numberOfBombs ++;
+                }//if
+            }//if
+
+        }//forEach
+    );
+    return numberOfBombs
+};
+
+
+const flipTile = (playerBoard, bombBoard, rowIndex, columnIndex) =>{
+  if(playerBoard[rowIndex][columnIndex] !== " "){
+        console.log("This tile has already been fliped!");
+        return
+    }else if (bombBoard[rowIndex][columnIndex] === "B"){
+        playerBoard[rowIndex][columnIndex] = "B";
+    }else{
+        playerBoard[rowIndex][columnIndex] = getNumberOfNeighborBombs(bombBoard, rowIndex, columnIndex);
+    }//else
+
+}//flipTile
 
 const printBoard = (board) =>{
     console.log(board.map(row => row.join(' | ')).join('\n'));
-}//printboard
+};//printboard
 
 
 let playerBoard = generatePlayerBoard(3,4);
@@ -61,3 +102,6 @@ printBoard(playerBoard);
 console.log("Bomb Board: ");
 printBoard(bombBoard);
 
+flipTile(playerBoard, bombBoard, 0,0);
+console.log('Updated Player Board:');
+printBoard(playerBoard);
